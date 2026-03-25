@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Concise History of Riktasthani-yuga</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parchment: #e8d5a3;
+  --parchment-dark: #c9a96e;
+  --parchment-deeper: #b8904a;
+  --ink: #2c1a0e;
+  --ink-mid: #4a2c14;
+  --ink-light: #7a5230;
+  --red-seal: #8b1a1a;
+  --gold: #9a6b2a;
+  --gold-light: #c9a050;
+  --cream: #f5ead0;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+/* ── PARCHMENT TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 300px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ── PROGRESS BAR ── */
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(to right, var(--red-seal), var(--gold));
+  z-index: 9999; width: 0; transition: width 0.1s;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(232,213,163,0.95);
+  border-bottom: 2px solid var(--parchment-dark);
+  backdrop-filter: blur(8px);
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.nav-title {
+  font-family: 'Cinzel', serif; font-size: 10px;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--ink-mid);
+}
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  font-family: 'Cinzel', serif; font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ink-light); text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--red-seal); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 80px 48px 60px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(139,26,26,0.05) 0%, transparent 60%),
+    linear-gradient(180deg, #f0e4c0 0%, #ede0bb 50%, #e8d5a3 100%);
+}
+.hero-ornament-top {
+  display: flex; align-items: center; gap: 20px; margin-bottom: 48px;
+  opacity: 0; animation: fadeUp 1s ease 0.3s forwards;
+}
+.ornament-line { width: 120px; height: 1px; background: var(--parchment-dark); }
+.ornament-diamond {
+  width: 10px; height: 10px;
+  background: var(--gold); transform: rotate(45deg);
+}
+.hero-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 10px;
+  letter-spacing: 6px; text-transform: uppercase;
+  color: var(--ink-light); margin-bottom: 24px;
+  opacity: 0; animation: fadeUp 1s ease 0.5s forwards;
+}
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(28px, 5vw, 60px);
+  font-weight: 700; line-height: 1.2;
+  color: var(--ink); margin-bottom: 12px;
+  text-shadow: 2px 3px 0 rgba(139,90,43,0.12);
+  opacity: 0; animation: fadeUp 1.2s ease 0.7s forwards;
+}
+.hero-subtitle {
+  font-family: 'Cinzel', serif; font-size: clamp(14px, 2vw, 20px);
+  letter-spacing: 5px; text-transform: uppercase;
+  color: var(--red-seal); margin-bottom: 40px;
+  opacity: 0; animation: fadeUp 1s ease 0.9s forwards;
+}
+.hero-authors {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic; font-size: 18px;
+  color: var(--ink-mid); margin-bottom: 60px;
+  opacity: 0; animation: fadeUp 1s ease 1.1s forwards;
+}
+.scroll-cue {
+  position: absolute; bottom: 36px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; animation: fadeUp 1s ease 2s forwards;
+}
+.scroll-cue span {
+  font-family: 'Cinzel', serif; font-size: 8px;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--ink-light);
+}
+.scroll-chevron {
+  width: 12px; height: 12px;
+  border-right: 1px solid var(--parchment-dark);
+  border-bottom: 1px solid var(--parchment-dark);
+  transform: rotate(45deg);
+  animation: bob 2s ease infinite;
+}
+@keyframes bob { 0%,100%{transform:rotate(45deg) translate(0,0);}50%{transform:rotate(45deg) translate(3px,3px);} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+
+/* ── SECTION LAYOUT ── */
+.page-section {
+  max-width: 900px; margin: 0 auto;
+  padding: 80px 48px;
+  position: relative; z-index: 1;
+}
+.section-full {
+  width: 100%; padding: 80px 0;
+  position: relative; z-index: 1;
+}
+
+/* ── PART HEADERS ── */
+.part-header {
+  width: 100%;
+  background: linear-gradient(135deg, #2c1a0e 0%, #4a2c14 50%, #2c1a0e 100%);
+  padding: 80px 48px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.part-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 2px,
+    rgba(201,160,80,0.03) 2px, rgba(201,160,80,0.03) 4px
+  );
+}
+.part-header-inner { position: relative; z-index: 1; }
+.part-number {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(40px, 6vw, 80px); font-weight: 400;
+  color: rgba(201,160,80,0.15); line-height: 1;
+  letter-spacing: 8px;
+}
+.part-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(18px, 3vw, 30px); font-weight: 700;
+  letter-spacing: 8px; text-transform: uppercase;
+  color: var(--gold-light); margin-top: -16px;
+}
+.part-border {
+  width: 80px; height: 1px;
+  background: var(--gold); margin: 20px auto 0;
+}
+
+/* ── DECORATIVE DIVIDER ── */
+.ornament-divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 40px 0;
+}
+.ornament-divider .line {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, var(--parchment-dark));
+}
+.ornament-divider .line.r {
+  background: linear-gradient(to left, transparent, var(--parchment-dark));
+}
+.ornament-divider .gem {
+  width: 8px; height: 8px;
+  border: 1px solid var(--gold); transform: rotate(45deg);
+  position: relative; flex-shrink: 0;
+}
+.ornament-divider .gem::after {
+  content: ''; position: absolute;
+  width: 3px; height: 3px; background: var(--gold);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+
+/* ── SECTION LABELS ── */
+.section-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 9px;
+  letter-spacing: 5px; text-transform: uppercase;
+  color: var(--ink-light); margin-bottom: 10px;
+}
+.section-heading {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(20px, 3vw, 32px); font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink); margin-bottom: 8px;
+}
+
+/* ── ABOUT AUTHORS ── */
+.authors-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  margin-top: 40px;
+}
+.author-card {
+  background: rgba(139,90,43,0.06);
+  border: 1px solid var(--parchment-dark);
+  border-top: 3px solid var(--red-seal);
+  padding: 32px 28px;
+}
+.author-card h3 {
+  font-family: 'Cinzel', serif; font-size: 13px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--red-seal); margin-bottom: 14px;
+}
+.author-card p { font-size: 15px; color: var(--ink-mid); }
+
+/* ── CHARACTER CARDS ── */
+.char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+.char-card {
+  background: rgba(201,169,110,0.15);
+  border: 1px solid var(--parchment-dark);
+  padding: 36px 30px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.char-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.char-card.empire::before { background: var(--gold); }
+.char-card.asura::before { background: var(--red-seal); }
+.char-card.hero::before { background: var(--gold-light); }
+.char-card.villain::before { background: #3d1a1a; }
+.char-card.mystery::before { background: var(--ink-light); }
+.char-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(44,26,14,0.15);
+}
+.char-role {
+  font-family: 'Cinzel', serif; font-size: 8px;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--ink-light); margin-bottom: 10px;
+}
+.char-name {
+  font-family: 'Cinzel', serif; font-size: 20px;
+  font-weight: 700; margin-bottom: 16px;
+  color: var(--ink);
+}
+.char-name.gold { color: var(--gold); }
+.char-name.red { color: var(--red-seal); }
+.char-body { font-size: 15px; color: var(--ink-mid); }
+.char-number {
+  position: absolute; bottom: 16px; right: 20px;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 48px; color: var(--parchment-dark);
+  opacity: 0.25; line-height: 1;
+}
+
+/* ── QUOTE BLOCK ── */
+.quote-block {
+  border-left: 4px solid var(--red-seal);
+  padding: 28px 36px;
+  background: rgba(139,26,26,0.04);
+  margin: 40px 0; position: relative;
+}
+.quote-block::before {
+  content: '\201C';
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 80px; color: var(--red-seal); opacity: 0.15;
+  position: absolute; top: -10px; left: 12px; line-height: 1;
+}
+.quote-text {
+  font-style: italic; font-size: 20px; line-height: 1.8;
+  color: var(--ink-mid);
+}
+.quote-source {
+  font-family: 'Cinzel', serif; font-size: 10px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink-light); margin-top: 12px;
+}
+
+/* ── TIMELINE ── */
+.timeline-wrap { margin-top: 48px; position: relative; }
+.timeline-spine {
+  position: absolute; left: 50%; top: 0; bottom: 0;
+  width: 2px; background: var(--parchment-dark);
+  transform: translateX(-50%);
+}
+.timeline-item {
+  display: flex; gap: 40px; margin-bottom: 40px;
+  align-items: flex-start; position: relative;
+}
+.timeline-item:nth-child(even) { flex-direction: row-reverse; }
+.timeline-item:nth-child(even) .tl-content { text-align: right; }
+.tl-content { flex: 1; }
+.tl-date {
+  font-family: 'Cinzel', serif; font-size: 11px;
+  letter-spacing: 2px; color: var(--red-seal);
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.tl-title {
+  font-family: 'Cinzel', serif; font-size: 13px;
+  font-weight: 600; color: var(--ink); margin-bottom: 6px;
+}
+.tl-body { font-size: 14px; color: var(--ink-mid); }
+.tl-dot {
+  width: 14px; height: 14px;
+  background: var(--gold); border: 2px solid var(--parchment-dark);
+  border-radius: 50%; flex-shrink: 0; margin-top: 4px;
+  position: relative; z-index: 1;
+}
+.tl-spacer { flex: 1; }
+
+/* ── STAT BLOCK ── */
+.stat-block {
+  text-align: center; padding: 60px 48px;
+  background: linear-gradient(135deg, rgba(44,26,14,0.06), rgba(139,26,26,0.04));
+  border: 1px solid var(--parchment-dark);
+  border-radius: 0; margin: 40px 0;
+}
+.stat-number {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(40px, 7vw, 80px); font-weight: 700;
+  color: var(--red-seal); line-height: 1; margin-bottom: 16px;
+}
+.stat-label {
+  font-style: italic; font-size: 18px; color: var(--ink-mid);
+  max-width: 500px; margin: 0 auto;
+}
+
+/* ── FOOTNOTE ── */
+.footnote {
+  font-size: 12px; color: var(--ink-light);
+  border-top: 1px solid var(--parchment-dark);
+  padding-top: 12px; margin-top: 32px;
+  font-style: italic;
+}
+
+/* ── REVEAL SECTION — THE TWIST ── */
+#the-truth {
+  background: #0a0704;
+  padding: 100px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#the-truth::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(139,26,26,0.15) 0%, transparent 70%);
+}
+.truth-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 9px;
+  letter-spacing: 8px; text-transform: uppercase;
+  color: rgba(201,160,80,0.5); margin-bottom: 32px;
+  position: relative; z-index: 1;
+}
+.truth-heading {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(28px, 5vw, 60px); font-weight: 700;
+  color: #f0e4c0;
+  text-shadow: 0 0 60px rgba(201,160,80,0.3);
+  margin-bottom: 48px; position: relative; z-index: 1;
+}
+.truth-points {
+  list-style: none; max-width: 700px; margin: 0 auto 48px;
+  position: relative; z-index: 1;
+}
+.truth-points li {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px; line-height: 1.9; color: #c8b894;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201,160,80,0.1);
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.truth-points li.in { opacity: 1; transform: translateY(0); }
+.truth-points li strong { color: #e8d5a3; }
+.truth-points li:last-child {
+  font-family: 'Cinzel', serif; font-size: 16px;
+  letter-spacing: 3px; color: var(--gold-light);
+  border-bottom: none; padding-top: 24px;
+  font-style: normal; font-weight: 700;
+}
+
+.truth-image-wrap {
+  max-width: 700px; margin: 0 auto 48px;
+  border: 2px solid rgba(201,160,80,0.2);
+  position: relative; z-index: 1;
+  overflow: hidden;
+}
+.truth-image-wrap img {
+  width: 100%; display: block;
+  filter: sepia(20%) brightness(0.9);
+}
+.truth-image-caption {
+  font-family: 'Cinzel', serif; font-size: 9px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(201,160,80,0.5); margin-top: 14px;
+  position: relative; z-index: 1;
+}
+
+/* ── TEASER BLOCK ── */
+.teaser-block {
+  background: linear-gradient(135deg, #1a0d08 0%, #2c1a0e 100%);
+  padding: 80px 48px; text-align: center;
+  border-top: 1px solid var(--parchment-dark);
+  border-bottom: 1px solid var(--parchment-dark);
+}
+.teaser-block h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(18px, 3vw, 32px); font-weight: 700;
+  letter-spacing: 6px; text-transform: uppercase;
+  color: var(--cream); margin-bottom: 16px;
+}
+.teaser-block p {
+  font-style: italic; font-size: 18px; color: var(--parchment-dark);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #0a0704;
+  padding: 60px 48px; text-align: center;
+  border-top: 2px solid rgba(201,160,80,0.2);
+}
+.footer-title {
+  font-family: 'Cinzel', serif; font-size: 12px;
+  letter-spacing: 5px; text-transform: uppercase;
+  color: var(--gold-light); margin-bottom: 12px;
+}
+.footer-sub {
+  font-size: 13px; color: rgba(200,180,140,0.4);
+  letter-spacing: 2px;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── ANARA CARD ── */
+.anara-card {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; border: 1px solid var(--parchment-dark);
+  margin: 40px 0; overflow: hidden;
+}
+.anara-img-side {
+  background: linear-gradient(135deg, #2c1a0e, #4a2c14);
+  padding: 40px; display: flex; align-items: center; justify-content: center;
+}
+.anara-img-placeholder {
+  width: 100%; aspect-ratio: 1;
+  max-width: 200px;
+  background: rgba(201,160,80,0.1);
+  border: 2px solid rgba(201,160,80,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 40px; color: rgba(201,160,80,0.3);
+}
+.anara-content-side { padding: 40px; }
+
+/* ── CLASSIFIED BANNER ── */
+.classified-banner {
+  background: var(--red-seal);
+  padding: 16px 32px; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 12px;
+  letter-spacing: 6px; text-transform: uppercase;
+  color: white; margin: 40px 0;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width: 720px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .page-section { padding: 60px 24px; }
+  .char-grid, .authors-grid { grid-template-columns: 1fr; }
+  .timeline-spine { left: 20px; }
+  .timeline-item, .timeline-item:nth-child(even) { flex-direction: column; padding-left: 48px; }
+  .tl-spacer { display: none; }
+  .tl-content, .timeline-item:nth-child(even) .tl-content { text-align: left; }
+  .tl-dot { position: absolute; left: 13px; }
+  .anara-card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-title">Project Arqueologos · DGM 6122</div>
+  <div class="nav-links">
+    <a href="#part1">The Players</a>
+    <a href="#part2">The War</a>
+    <a href="#part3">Aftermath</a>
+    <a href="#the-truth">The Truth</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-ornament-top">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line"></div>
+  </div>
+  <p class="hero-eyebrow">Project Arqueologos · DGM 6122 Final</p>
+  <h1 class="hero-title">A Concise History<br>of Riktasthani-yuga</h1>
+  <p class="hero-subtitle">An Archaeological Survey</p>
+  <p class="hero-authors">by Drs. Caspar, Melchior &amp; Balthazar</p>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-chevron"></div>
+  </div>
+</section>
+
+<!-- ABOUT THE AUTHORS -->
+<div class="page-section">
+  <div class="reveal">
+    <p class="section-eyebrow">Preface</p>
+    <h2 class="section-heading">About the Authors</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+    <div class="authors-grid">
+      <div class="author-card reveal reveal-delay-1">
+        <h3>Drs. Caspar &amp; Melchior</h3>
+        <p>Recognized as the foremost experts on the Riktasthani-yuga and its chief polity, the Suryagarh Empire. Their centuries of careful study of historical records have yielded a wealth of understanding about the Suryagarhan empire, the Asuras who ruled over it, and the social upheavals of the era.</p>
+      </div>
+      <div class="author-card reveal reveal-delay-2">
+        <h3>Dr. Balthazar</h3>
+        <p>His excavations of important Suryagarhan archaeological sites have provided direct evidence of many theories, granting us the ability to directly examine Swargalokan history rather than merely conjecture about it. Together, their body of work has informed over eleven civilizations' perceptions of the Riktasthani-yuga.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART I HEADER -->
+<div id="part1" class="part-header section-full">
+  <div class="part-header-inner">
+    <div class="part-number">I</div>
+    <div class="part-title">The Major Players</div>
+    <div class="part-border"></div>
+  </div>
+</div>
+
+<!-- SURYAGARH EMPIRE -->
+<div class="page-section">
+  <div class="reveal">
+    <p class="section-eyebrow">The Dominant Polity</p>
+    <h2 class="section-heading">The Suryagarh Empire</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+  </div>
+  <div class="char-grid">
+    <div class="char-card empire reveal reveal-delay-1">
+      <p class="char-role">Political Identity</p>
+      <p class="char-name gold">Suryagarh</p>
+      <p class="char-body">The leading polity during the Riktasthani-Yuga, composed of many different species but ruled over by the Devas. Principal cities included the capital, <strong>Amaravati</strong>, and the port city of <strong>Tarakamaya</strong>.</p>
+      <div class="char-number">I</div>
+    </div>
+    <div class="char-card empire reveal reveal-delay-2">
+      <p class="char-role">Historical Legacy</p>
+      <p class="char-name gold">The Devas' Empire</p>
+      <p class="char-body">Waged a prolonged war on the Asuras that ended when Emperor Suryavaan sealed away their leadership. The current polities of Swargaloka ultimately descend from the members of its ruling class.</p>
+      <div class="char-number">II</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE ASURAS -->
+<div class="page-section" style="background:rgba(44,26,14,0.04); border-top:1px solid var(--parchment-dark); border-bottom:1px solid var(--parchment-dark);">
+  <div class="reveal">
+    <p class="section-eyebrow">The Opposition</p>
+    <h2 class="section-heading">The Asuras</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+    <p style="font-size:17px; color:var(--ink-mid); max-width:680px;">Our research uncovered that the Asuras came from a dimension beyond our own, in which they had been sealed long ago by unknown forces. Their initial entry into Swargaloka was dictated by a need to re-assert their existence in the face of a prolonged, potentially permanent dormancy.</p>
+  </div>
+  <div class="char-grid" style="margin-top:40px;">
+    <div class="char-card asura reveal reveal-delay-1">
+      <p class="char-role">Antagonist — Suryagarh</p>
+      <p class="char-name red">Vikarna</p>
+      <p class="char-body">Of unknown origins, Vikarna united the disparate Asura tribes after a protracted struggle with rival chieftains. He became the most feared general Swargaloka had ever seen.</p>
+      <div class="char-number">V</div>
+    </div>
+    <div class="char-card hero reveal reveal-delay-2">
+      <p class="char-role">Emperor — Suryagarh</p>
+      <p class="char-name gold">Suryavaan</p>
+      <p class="char-body">Born in RY 143879. Crowned Emperor after the death of his father in RY 145326. Led the Suryagarhan Empire for millennia, bringing it into a new age of prosperity — and ultimately sealing away Vikarna at Mt. Meru.</p>
+      <div class="char-number">III</div>
+    </div>
+  </div>
+</div>
+
+<!-- THREE WISE MEN -->
+<div class="page-section">
+  <div class="reveal">
+    <p class="section-eyebrow">Unknown Allies</p>
+    <h2 class="section-heading">The Three Wise Men</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+    <p style="color:var(--ink-mid);">Among Vikarna's personal effects we discovered journals written by a group calling themselves the <strong>"Three Wise Men"</strong>. We believe these three were close confidants of Vikarna; their journal speaks extensively of having interacted with him and helped manage his personal affairs.</p>
+  </div>
+  <div class="quote-block reveal" style="margin-top:40px;">
+    <p class="quote-text">Interestingly, nowhere else in Swargalokan history have these "Three Wise Men" been recorded — leading us to believe they went to extraordinary lengths to conceal their identities.</p>
+    <p class="quote-source">— Caspar &amp; Melchior, preliminary notes</p>
+  </div>
+</div>
+
+<!-- PART II HEADER -->
+<div id="part2" class="part-header section-full">
+  <div class="part-header-inner">
+    <div class="part-number">II</div>
+    <div class="part-title">The Asura-Suryagarha War</div>
+    <div class="part-border"></div>
+  </div>
+</div>
+
+<!-- QUOTE SLIDE -->
+<div class="page-section">
+  <div class="quote-block reveal" style="max-width:640px; margin: 0 auto;">
+    <p class="quote-text">"History is not decided by the truth-tellers, but rather by the victors."</p>
+    <p class="quote-source">— Journal no. 3, Entry 18/45/15371, "M."</p>
+  </div>
+
+  <div class="reveal" style="margin-top:60px;">
+    <p class="section-eyebrow">Causes of Conflict</p>
+    <h2 class="section-heading">Why and How?</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+    <p style="color:var(--ink-mid);">Stelai excavated near New Amaravati indicate that Vikarna's proclamation of war against the Suryagarhan Empire arose from his desire to alter Swargaloka's <strong>Akashic Records</strong>. The Devas, viewing this as an outright threat to their continued primacy, mobilized the different races of Swargaloka against the Asuran threat.</p>
+    <p style="color:var(--ink-mid); margin-top:16px;"><strong>500 years of war ensued</strong> — leading to millions of lives lost on both sides and countless cities destroyed.</p>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="page-section">
+  <div class="reveal">
+    <p class="section-eyebrow">Chronology</p>
+    <h2 class="section-heading">The War Timeline</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+  </div>
+
+  <div class="timeline-wrap reveal">
+    <div class="timeline-spine"></div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <p class="tl-date">RY 14872</p>
+        <p class="tl-title">Declaration of War</p>
+        <p class="tl-body">Suryavaan declares war on the Asuras following Vikarna's proclamation.</p>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-spacer"></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-spacer"></div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <p class="tl-date">RY 14873</p>
+        <p class="tl-title">Surya Stambh Offensive</p>
+        <p class="tl-body">Asuras begin their advance on major Suryagarhan cities.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <p class="tl-date">RY 14921–15121</p>
+        <p class="tl-title">200-Year Stalemate</p>
+        <p class="tl-body">Heavy attrition of forces along front lines on both sides. Neither army can break through.</p>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-spacer"></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-spacer"></div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <p class="tl-date">RY 15122</p>
+        <p class="tl-title">Rise of General Veer Arka</p>
+        <p class="tl-body">His tactical genius renewed the Suryagarhan army and allowed them to truly succeed against the Asuras for the first time.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <p class="tl-date">RY 15272</p>
+        <p class="tl-title">Battle of Nirvaan Kshetra</p>
+        <p class="tl-body">Asura forces unable to mount even token resistance — a turning point in Suryagarhan history. Victory achieved swiftly, at great civilian cost.</p>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-spacer"></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-spacer"></div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <p class="tl-date">RY 15372</p>
+        <p class="tl-title">Battle of Mt. Meru</p>
+        <p class="tl-body">The final battle. Suryavaan seals away Vikarna in Patala. Without their leader, the Asura armies surrender immediately. End of the Asura Wars.</p>
+      </div>
+    </div>
+  </div>
+  <p class="footnote reveal">Source: M. Balthazar, <em>Vikarna: Life &amp; Times</em>, pp. 236–238 · <em>Annals of Suryagarh</em>, pp. 3456–3469</p>
+</div>
+
+<!-- PART III HEADER -->
+<div id="part3" class="part-header section-full">
+  <div class="part-header-inner">
+    <div class="part-number">III</div>
+    <div class="part-title">Aftermath</div>
+    <div class="part-border"></div>
+  </div>
+</div>
+
+<!-- CASUALTIES -->
+<div class="page-section">
+  <div class="stat-block reveal">
+    <div class="stat-number">89,526,124</div>
+    <p class="stat-label">Number of casualties during the Asura Wars — approximately 65 million Asuras and 24 million Suryagarhans.</p>
+  </div>
+
+  <div class="reveal" style="margin-top:40px;">
+    <p class="section-eyebrow">The Official Record</p>
+    <h2 class="section-heading">The Traditional Account</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+    <p style="color:var(--ink-mid);">Vikarna's exact motives were never determined, and no one knows what became of him after his sealing. The Suryagarh Empire went on to last additional centuries before splitting apart into numerous daughter polities around RY 15813. The remaining Asuras either fled Swargaloka or slowly integrated into Suryagarhan society.</p>
+  </div>
+</div>
+
+<!-- TEASER -->
+<div class="teaser-block section-full reveal">
+  <h2>…does something seem a little off to you?</h2>
+  <p>What if the truth were… a bit different?</p>
+</div>
+
+<!-- THE MISSING PIECE: ANARA -->
+<div class="page-section">
+  <div class="classified-banner reveal">⬥ Previously Undisclosed Research ⬥</div>
+
+  <div class="reveal">
+    <p class="section-eyebrow">The Missing Piece</p>
+    <h2 class="section-heading">Anara</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+    <p style="color:var(--ink-mid); margin-bottom:20px;">Our ground-breaking research revealed that prior to engaging Suryagarh in open warfare, Vikarna had a <strong>Deva consort named Anara</strong>. What few surviving accounts we could find of her suggested she was both beautiful and kind, free of the usual prejudices against Asuras.</p>
+    <p style="color:var(--ink-mid);">In traditional historiography, she is sometimes mentioned only as a <em>"corrupting influence"</em> on middle period Suryagarh — a deliberate erasure of her true significance.</p>
+  </div>
+
+  <div class="quote-block reveal" style="border-left-color:var(--ink-light);">
+    <p class="quote-text">For the "crime" of associating with an Asura, Anara was personally sentenced to <strong>"erasure"</strong> by Emperor Suryavaan — an unprecedented direct alteration to Swargaloka's Akashic Records.</p>
+    <p class="quote-source">— Exclusive archive discovery, New Amaravati</p>
+  </div>
+
+  <div class="reveal" style="margin-top:40px;">
+    <p class="section-eyebrow">The Descendants</p>
+    <h2 class="section-heading">Did They Survive?</h2>
+    <div class="ornament-divider">
+      <div class="line"></div><div class="gem"></div><div class="line r"></div>
+    </div>
+    <p style="color:var(--ink-mid);">Evidence suggests Anara and Vikarna had at least two children — essentially unrecorded in any piece of official Swargalokan history. The last entry in the journal of <strong>"C."</strong> talks about having <em>"hidden away two children… their mother taken away from them… their father an enemy of the world… far away from the eyes of Swargaloka."</em></p>
+    <p style="color:var(--ink-mid); margin-top:16px;">This suggests that the Three Wise Men helped ensure the continuation of Vikarna's legacy — not just historically, but physically as well.</p>
+  </div>
+
+  <div class="reveal" style="margin-top:40px; padding:32px; background:rgba(139,26,26,0.06); border:1px solid rgba(139,26,26,0.2); text-align:center;">
+    <p style="font-family:'Cinzel',serif; font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--ink-light); margin-bottom:16px;">The Question Remains</p>
+    <p style="font-size:20px; font-style:italic; color:var(--ink-mid);">Who exactly were these <strong>"Three Wise Men"</strong>?</p>
+  </div>
+</div>
+
+<!-- THE TRUTH REVEAL -->
+<div id="the-truth">
+  <div style="position:relative; z-index:1; max-width:800px; margin:0 auto;">
+    <p class="truth-eyebrow">For the First Time in Our Centuries-Long Careers</p>
+    <h2 class="truth-heading">The Truth</h2>
+
+    <ul class="truth-points" id="truth-list">
+      <li>We are, and have always been, <strong>the Three Wise Men.</strong></li>
+      <li>We have created this presentation to keep the <strong>memory of the Asuras alive.</strong></li>
+      <li>To ensure that Suryagarh's official history does not write <strong>Vikarna and Anara</strong> out of their own story.</li>
+      <li>And to ensure the fate of their children does not go unknown.</li>
+      <li>We have not forgiven. <strong>We have not forgotten.</strong></li>
+      <li>The Asuras will rise again.</li>
+      <li style="font-size:13px; letter-spacing:4px;">And we, once again, shall be their witnesses.</li>
+    </ul>
+
+    <div class="truth-image-wrap reveal">
+      <div style="background:linear-gradient(135deg,#1a0d08,#2c1a0e); padding:40px; text-align:center;">
+        <p style="font-family:'Cinzel Decorative',serif; font-size:14px; color:rgba(201,160,80,0.4); letter-spacing:4px;">Fig. 7</p>
+        <p style="font-family:'Libre Baskerville',serif; font-style:italic; font-size:15px; color:rgba(201,160,80,0.6); margin-top:8px;">Reconstructed portrait of the Three Wise Men, based on sketches found in the journal of "B."</p>
+        <div style="margin-top:24px; display:flex; justify-content:center; gap:24px; opacity:0.4;">
+          <div style="width:60px;height:3px;background:var(--gold-light);"></div>
+          <div style="width:8px;height:8px;background:var(--gold-light);transform:rotate(45deg);"></div>
+          <div style="width:60px;height:3px;background:var(--gold-light);"></div>
+        </div>
+      </div>
+    </div>
+    <p class="truth-image-caption">Project Something Productions · 2026</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:24px;">
+    <div style="width:80px;height:1px;background:rgba(201,160,80,0.2);"></div>
+    <div style="width:8px;height:8px;background:rgba(201,160,80,0.3);transform:rotate(45deg);"></div>
+    <div style="width:80px;height:1px;background:rgba(201,160,80,0.2);"></div>
+  </div>
+  <p class="footer-title">Project Arqueologos</p>
+  <p class="footer-sub">DGM 6122 · Digital Storytelling · 2026</p>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = (window.scrollY / total) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+}, {passive:true});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+  });
+},{threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Truth list stagger
+const truthObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const items = document.querySelectorAll('#truth-list li');
+      items.forEach((li, i) => {
+        setTimeout(() => li.classList.add('in'), i * 300);
+      });
+      truthObs.disconnect();
+    }
+  });
+},{threshold:0.3});
+const tl = document.getElementById('truth-list');
+if(tl) truthObs.observe(tl);
+</script>
+</body>
+</html>
