@@ -83,6 +83,7 @@
     #hero-video-wrap{
       position:absolute; inset:0; z-index:0;
       overflow:hidden; pointer-events:none;
+      transition:opacity 1.8s ease;
     }
     #hero-video-wrap video{
       position:absolute;
@@ -91,6 +92,16 @@
       min-height:100vh; min-width:177.78vh;
       transform:translate(-50%,-50%);
       object-fit:cover;
+    }
+    /* Dark theme background that shows after video fades */
+    #hero-bg{
+      position:absolute; inset:0; z-index:0;
+      background:
+        linear-gradient(to bottom,rgba(8,6,4,0.35) 0%,rgba(12,8,4,0.55) 40%,rgba(8,6,4,0.92) 100%),
+        radial-gradient(ellipse at 50% 30%,rgba(90,55,10,0.5) 0%,transparent 70%),
+        radial-gradient(ellipse at 20% 80%,rgba(60,15,15,0.3) 0%,transparent 50%),
+        radial-gradient(ellipse at 80% 70%,rgba(30,20,5,0.4) 0%,transparent 50%),
+        linear-gradient(180deg,#0E0A05 0%,#1A0F06 30%,#100A04 60%,#080604 100%);
     }
     /* Dark overlay so text stays readable */
     #hero-overlay{
@@ -262,9 +273,10 @@
 
 <!-- HERO -->
 <section id="hero">
+  <div id="hero-bg"></div>
   <div id="hero-video-wrap">
-    <video autoplay muted loop playsinline>
-      <source src="0319 (1)-copy-copy (1)(1).mp4" type="video/mp4">
+    <video id="hero-video" autoplay muted playsinline>
+      <source src="hero.mp4" type="video/mp4">
     </video>
   </div>
   <div id="hero-overlay"></div>
@@ -494,6 +506,16 @@ function getAC(){
   if(!_AC) _AC=new(window.AudioContext||window.webkitAudioContext)();
   if(_AC.state==='suspended') _AC.resume();
   return _AC;
+}
+
+/* ─── VIDEO FADE OUT ON END ─── */
+const heroVideo=document.getElementById('hero-video');
+if(heroVideo){
+  heroVideo.addEventListener('ended',()=>{
+    const wrap=document.getElementById('hero-video-wrap');
+    wrap.style.opacity='0';
+    setTimeout(()=>wrap.style.display='none',1900);
+  });
 }
 
 /* ─── 1. BLOOD DRIP ─── */
